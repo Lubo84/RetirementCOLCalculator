@@ -7,6 +7,8 @@ import PercentageToggle from "./PercentageToggle";
 import BenchmarkChart from "./BenchmarkChart";
 import InfoCard from "./InfoCard";
 import { FileDown, RotateCcw, ArrowLeft, ExternalLink, AlertCircle, CheckCircle } from "lucide-react";
+import { generateRetirementPDF } from "@/lib/pdfGenerator";
+import { useToast } from "@/hooks/use-toast";
 
 interface ResultsPageProps {
   weeklyAmount: number;
@@ -28,6 +30,8 @@ export default function ResultsPage({
   onRestart,
 }: ResultsPageProps) {
   const [percentage, setPercentage] = useState(100);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const { toast } = useToast();
 
   const adjustedWeekly = (weeklyAmount * percentage) / 100;
   const adjustedYearly = (yearlyAmount * percentage) / 100;
@@ -37,6 +41,35 @@ export default function ResultsPage({
   const basePension = isCouple ? 46202 : 30646;
   const rentAssistance = isCouple ? 5283 : 5600;
   const agePension = isHomeOwner ? basePension : basePension + rentAssistance;
+
+  const handleGeneratePDF = async () => {
+    setIsGenerating(true);
+    try {
+      await generateRetirementPDF({
+        weeklyAmount: adjustedWeekly,
+        yearlyAmount: adjustedYearly,
+        percentage,
+        isCouple,
+        isHomeOwner,
+        yearsToRetirement,
+        asfaComfortable,
+        asfaModest,
+        agePension,
+      });
+      toast({
+        title: "PDF Generated Successfully",
+        description: "Your retirement snapshot has been downloaded.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error Generating PDF",
+        description: "There was an issue creating your PDF. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const getTimeframeMessage = () => {
     if (yearsToRetirement === "<5") {
@@ -200,11 +233,12 @@ export default function ResultsPage({
             <Button
               size="lg"
               className="bg-primary text-primary-foreground"
-              onClick={() => console.log('Generate PDF')}
+              onClick={handleGeneratePDF}
+              disabled={isGenerating}
               data-testid="button-generate-pdf"
             >
               <FileDown className="mr-2 h-5 w-5" />
-              Generate PDF Report
+              {isGenerating ? "Generating..." : "Generate PDF Report"}
             </Button>
           </div>
         </div>
