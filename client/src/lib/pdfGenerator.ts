@@ -150,19 +150,19 @@ export async function generateRetirementPDF(data: PDFData): Promise<void> {
 
   pdf.setFontSize(10);
   pdf.setFont('helvetica', 'bold');
-  pdf.text('ASFA Comfortable', margin, yPosition);
+  pdf.text(`ASFA Comfortable${!data.isHomeOwner ? ' (Renter)' : ''}`, margin, yPosition);
   yPosition += 5;
   pdf.setFont('helvetica', 'normal');
-  const comfortableText = `$${data.asfaComfortable.toLocaleString()} per year for ${data.isCouple ? 'a couple' : 'a single person'}. Covers private health insurance, regular dining out, domestic and occasional international travel, and a good standard of living.`;
+  const comfortableText = `$${data.asfaComfortable.toLocaleString()} per year for ${data.isCouple ? 'a couple' : 'a single person'}. Covers private health insurance, regular dining out, domestic and occasional international travel, and a good standard of living${!data.isHomeOwner ? ', including rental costs' : ''}.`;
   const comfortableLines = pdf.splitTextToSize(comfortableText, pageWidth - 2 * margin);
   pdf.text(comfortableLines, margin, yPosition);
   yPosition += comfortableLines.length * 5 + 5;
 
   pdf.setFont('helvetica', 'bold');
-  pdf.text('ASFA Modest', margin, yPosition);
+  pdf.text(`ASFA Modest${!data.isHomeOwner ? ' (Renter)' : ''}`, margin, yPosition);
   yPosition += 5;
   pdf.setFont('helvetica', 'normal');
-  const modestText = `$${data.asfaModest.toLocaleString()} per year for ${data.isCouple ? 'a couple' : 'a single person'}. Covers basic health cover, limited leisure and travel, and essential needs. Better than relying on the Age Pension alone.`;
+  const modestText = `$${data.asfaModest.toLocaleString()} per year for ${data.isCouple ? 'a couple' : 'a single person'}. Covers basic health cover, limited leisure and travel, and essential needs${!data.isHomeOwner ? ', including rental costs' : ''}. Better than relying on the Age Pension alone.`;
   const modestLines = pdf.splitTextToSize(modestText, pageWidth - 2 * margin);
   pdf.text(modestLines, margin, yPosition);
   yPosition += modestLines.length * 5 + 5;
@@ -174,7 +174,24 @@ export async function generateRetirementPDF(data: PDFData): Promise<void> {
   const pensionText = `$${data.agePension.toLocaleString()} per year for ${data.isCouple ? 'a couple' : 'a single person'}${!data.isHomeOwner ? ' including maximum rent assistance' : ''}. The maximum government support available, subject to income and asset tests.`;
   const pensionLines = pdf.splitTextToSize(pensionText, pageWidth - 2 * margin);
   pdf.text(pensionLines, margin, yPosition);
-  yPosition += pensionLines.length * 5 + 15;
+  yPosition += pensionLines.length * 5 + 10;
+
+  // Add renter methodology explanation
+  if (!data.isHomeOwner) {
+    if (yPosition > 230) {
+      pdf.addPage();
+      yPosition = 20;
+    }
+    
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('About the Comfortable Renter Standard', margin, yPosition);
+    yPosition += 5;
+    pdf.setFont('helvetica', 'normal');
+    const renterText = `The ASFA Comfortable (Renter) standard is calculated by taking the difference between the ASFA Modest (Renter) and ASFA Modest (Homeowner) standards, then adding this rental cost adjustment to the ASFA Comfortable (Homeowner) standard. This provides a realistic estimate of what comfortable retirement looks like for those who rent their home.`;
+    const renterLines = pdf.splitTextToSize(renterText, pageWidth - 2 * margin);
+    pdf.text(renterLines, margin, yPosition);
+    yPosition += renterLines.length * 5 + 10;
+  }
 
   // Next Steps
   if (yPosition > 240) {

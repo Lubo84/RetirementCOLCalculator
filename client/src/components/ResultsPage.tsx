@@ -36,11 +36,19 @@ export default function ResultsPage({
   const adjustedWeekly = (weeklyAmount * percentage) / 100;
   const adjustedYearly = (yearlyAmount * percentage) / 100;
 
-  const asfaComfortable = isCouple ? 72000 : 52085;
-  const asfaModest = isCouple ? 46620 : 32300;
-  const basePension = isCouple ? 46202 : 30646;
-  const rentAssistance = isCouple ? 5283 : 5600;
-  const agePension = isHomeOwner ? basePension : basePension + rentAssistance;
+  // ASFA Standards based on homeowner/renter status
+  const asfaComfortable = isHomeOwner
+    ? (isCouple ? 73319 : 54419)
+    : (isCouple ? 91623 : 67811);
+  
+  const asfaModest = isHomeOwner
+    ? (isCouple ? 49992 : 34522)
+    : (isCouple ? 62256 : 45844);
+  
+  // Age Pension figures
+  const agePension = isHomeOwner
+    ? (isCouple ? 46202 : 30646)
+    : (isCouple ? 51486 : 36246);
 
   const handleGeneratePDF = async () => {
     setIsGenerating(true);
@@ -146,22 +154,26 @@ export default function ResultsPage({
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="h-3 w-3 rounded-sm bg-chart-2" />
-                  <h4 className="font-semibold text-foreground">ASFA Comfortable</h4>
+                  <h4 className="font-semibold text-foreground">
+                    ASFA Comfortable{!isHomeOwner && " (Renter)"}
+                  </h4>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  ${asfaComfortable.toLocaleString()} per year for a {isCouple ? "couple" : "single person"}. 
+                  ${asfaComfortable.toLocaleString()} per year for {isCouple ? "a couple" : "a single person"}. 
                   Covers private health insurance, regular dining out, domestic and occasional international travel, 
-                  and a good standard of living.
+                  and a good standard of living{!isHomeOwner && ", including rental costs"}.
                 </p>
               </div>
               <div>
                 <div className="flex items-center gap-2 mb-2">
                   <div className="h-3 w-3 rounded-sm bg-chart-3" />
-                  <h4 className="font-semibold text-foreground">ASFA Modest</h4>
+                  <h4 className="font-semibold text-foreground">
+                    ASFA Modest{!isHomeOwner && " (Renter)"}
+                  </h4>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  ${asfaModest.toLocaleString()} per year for a {isCouple ? "couple" : "single person"}. 
-                  Covers basic health cover, limited leisure and travel, and essential needs. Better than relying 
+                  ${asfaModest.toLocaleString()} per year for {isCouple ? "a couple" : "a single person"}. 
+                  Covers basic health cover, limited leisure and travel, and essential needs{!isHomeOwner && ", including rental costs"}. Better than relying 
                   on the Age Pension alone.
                 </p>
               </div>
@@ -171,12 +183,24 @@ export default function ResultsPage({
                   <h4 className="font-semibold text-foreground">Full Age Pension</h4>
                 </div>
                 <p className="text-sm text-muted-foreground">
-                  ${agePension.toLocaleString()} per year for a {isCouple ? "couple" : "single person"}
+                  ${agePension.toLocaleString()} per year for {isCouple ? "a couple" : "a single person"}
                   {!isHomeOwner && " including maximum rent assistance"}. The maximum government support available, 
                   subject to income and asset tests.
                 </p>
               </div>
             </div>
+            
+            {!isHomeOwner && (
+              <div className="mt-6 pt-6 border-t">
+                <h4 className="font-semibold text-foreground mb-3">About the Comfortable Renter Standard</h4>
+                <p className="text-sm text-muted-foreground">
+                  The ASFA Comfortable (Renter) standard is calculated by taking the difference between the ASFA Modest 
+                  (Renter) and ASFA Modest (Homeowner) standards, then adding this rental cost adjustment to the 
+                  ASFA Comfortable (Homeowner) standard. This provides a realistic estimate of what comfortable 
+                  retirement looks like for those who rent their home.
+                </p>
+              </div>
+            )}
           </Card>
 
           <Card className="p-8 bg-hostplus-yellow-light border-hostplus-yellow/20">
