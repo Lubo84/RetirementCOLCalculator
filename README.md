@@ -1,8 +1,8 @@
-# Retirement Income Planner
+# Retirement Planner
 
 [**Launch the live retirement planner →**](https://retirement-income-planner.lubo51.chatgpt.site)
 
-A simple Australian retirement income prototype that helps people connect the lifestyle they want with the income sources that may support it.
+A simple Australian retirement planner prototype that helps people connect the lifestyle they want with the income sources that may support it.
 
 ## What it helps estimate
 
