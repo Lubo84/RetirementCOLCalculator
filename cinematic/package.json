@@ -1,0 +1,1 @@
+{"name":"retirement-life-target","private":true,"version":"2.0.0","scripts":{"build":"esbuild source/horizon.js --bundle --minify --format=esm --target=es2020 --outfile=assets/horizon.js --legal-comments=eof","test":"node check.cjs"},"devDependencies":{"three":"0.180.0","esbuild":"0.25.10"}}

@@ -1,32 +1,40 @@
-# Retirement target concept
+# A good life. Today and tomorrow.
 
-Independent Hostplus-inspired prototype, created 17 October 2026. This is a spending target builder, not an official Hostplus calculator or financial advice.
+Independent Hostplus-inspired retirement spending target prototype. Updated 18 October 2026.
 
-## Run and verify
+## Experience
 
-Open `index.html` directly in a modern browser. There are no dependencies, external fonts, trackers or remote assets. From the repository root, run `node cinematic/check.cjs` for source and calculation checks.
+The design incorporates Ian's retirement reflection: money is a tool for a meaningful life; time, health, people and opportunities matter too. The opening uses his line “Don't save your healthiest dreams for your oldest body”, balanced with providing for one's future self and allowing room to just be. There is no lifestyle score, prescribed priority or pressure to spend.
 
-## Design and behaviour
+- Self-hosted Three.js ocean horizon with an animated water surface, reflected sunlight, pointer perspective and scroll-driven light.
+- Explicit pause/play, reduced-motion preference handling, off-screen and background-tab suspension, WebGL context-loss fallback and capped pixel ratio/frame rate.
+- Optional priorities, carried into the result without changing budget amounts.
+- Optional named experience plan: before retirement is separate from the retirement spending target; during retirement adds cost / saving years to the annual target. No return, price growth or tax assumption is applied to that allowance. Double-counting warning shown.
+- Original household, housing, category review, frequency, buffer, future purchase, scenario, inflation illustration, print and CSV features retained.
+- Default session-only state; localStorage saving is optional. Notes and priorities use the same setting. No inputs leave the browser. Notes render as text; CSV formula prefixes are escaped.
 
-- Cinematic SVG coastal scene, Hostplus navy / blue / yellow, system typography and reduced-motion support.
-- Three stages: household and housing, editable category budget, target and next steps.
-- Nine category examples use rounded monthly figures observed in the original RCC for singles and couples. They are labelled as examples. Annualised examples can differ from exact benchmark totals.
-- Housing payments are separate. Home category examples include ownership costs; renters are prompted to review them.
-- Zero amounts allowed. Invalid entries retain the last valid value and block step navigation.
-- Big purchase allowance = amount divided by years. Other annual allowance plus optional buffer. Buffer excludes travel and future allowances.
-- Frequency changes preserve underlying annual values; the displayed input is rounded to cents.
-- ASFA June 2026 annual benchmarks: single modest 36,548, comfortable 56,166, modest renter 51,418; couple modest 52,690, comfortable 78,998, modest renter 69,376. Renters' benchmark is after Commonwealth Rent Assistance, unlike the full rent input; caveat shown. No direct mortgage benchmark.
-- Comparison point, travel what-if, optional inflation illustration, CSV, print/PDF, clipboard handoff to the projection calculator.
-- Session-only inputs by default. Optional localStorage. No network requests or user data transmission.
+## Running and rebuilding
 
-## Sources inspected
+Serve this folder as static files. There are no runtime CDN requests, remote fonts or tracking. The shipped `assets/horizon.js` is a bundle of scene code and Three.js 0.180.0. License is in `assets/THREE-LICENSE.txt`.
 
-- https://hostplus.gbsau.com/hitting-the-target/ — full live inspection by a sub-agent, both household types and all categories.
-- https://hostplus.gbsau.com/supermodeller-v3/#/ — direct visual and interaction review for brand alignment.
-- https://www.superannuation.asn.au/consumers/retirement-standard/ — June quarter 2026 benchmark table.
+```
+cd cinematic
+npm install --ignore-scripts
+npm run build
+npm test
+```
 
-## Scope and limits
+`source/horizon.js` is the readable scene source; `index.html` contains calculator source and styling. `previous.html` preserves the original concept for reference; Git history supports reverting changes.
 
-This prototype does not calculate tax, Age Pension eligibility, affordability, investment returns, aged care costs or retirement drawdown sustainability. Production use requires Hostplus content, accessibility, privacy and compliance review and validation of licensed source budget data. Official projection calculator linking is manual; no unsupported prefill URL is claimed.
+## Calculations and sources
 
-The prototype is added in its own `cinematic/` folder so prior repository content is retained.
+37 automated checks cover original calculations plus experience timing, reserves and buffer exclusions. Live browser QA verifies interactions and rendering separately.
+
+Category starters use rounded monthly figures observed in the original RCC on 17 October 2026; they are examples rather than exact ASFA detailed budget data. Annualised totals can differ slightly from exact benchmarks. Benchmarks: ASFA June quarter 2026, ages 65–84. Single modest 36,548; comfortable 56,166; modest renter 51,418. Couple modest 52,690; comfortable 78,998; modest renter 69,376. Homeowner assumes outright ownership. Renter benchmark is after Commonwealth Rent Assistance, unlike the full rent input; caveat is shown. Mortgage is not directly compared to these benchmarks.
+
+Sources:
+- https://hostplus.gbsau.com/hitting-the-target/
+- https://hostplus.gbsau.com/supermodeller-v3/#/
+- https://www.superannuation.asn.au/consumers/retirement-standard/
+
+This is not an official Hostplus tool, financial advice or an affordability model. It does not determine tax, pension eligibility, drawdown sustainability, debt repayment timing or aged care costs. A member-facing release requires content, compliance, accessibility and source-data review.
