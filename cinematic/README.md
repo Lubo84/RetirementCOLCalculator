@@ -9,7 +9,7 @@ The design incorporates Ian's retirement reflection: money is a tool for a meani
 - Self-hosted Three.js ocean horizon with an animated water surface, reflected sunlight, pointer perspective and scroll-driven light.
 - Explicit pause/play, reduced-motion preference handling, off-screen and background-tab suspension, WebGL context-loss fallback and capped pixel ratio/frame rate.
 - Optional priorities, carried into the result without changing budget amounts.
-- Optional named experience plan: before retirement is separate from the retirement spending target; during retirement is also excluded from the annual target and exported as a full, timed expense. No return, price growth or tax assumption is applied to that allowance. Double-counting warning shown.
+- Optional named experience plan: before retirement is separate from the retirement spending target; during retirement is also excluded from the annual target and exported as a full, timed expense. No saving allowance, investment return, price growth or tax assumption is applied to those separate expenses. Double-counting warning shown.
 - Original household, housing, category review, frequency, buffer, future purchase, scenario, inflation illustration, print and CSV features retained.
 - Default session-only state; localStorage saving is optional. Notes and priorities use the same setting. No inputs leave the browser. Notes render as text; CSV formula prefixes are escaped.
 
@@ -28,7 +28,7 @@ npm test
 
 ## Calculations and sources
 
-Automated checks cover original calculations plus experience timing, reserves and buffer exclusions. Live browser QA verifies interactions and rendering separately.
+55 automated checks cover ongoing calculations, one-off exclusion, full-cost handoff, timing, repeat intervals, saved-plan migration and buffer rules. Live browser QA verifies interactions and rendering separately.
 
 Category starters use rounded monthly figures observed in the original RCC on 17 October 2026; they are examples rather than exact ASFA detailed budget data. Annualised totals can differ slightly from exact benchmarks. Benchmarks: ASFA June quarter 2026, ages 65–84. Single modest 36,548; comfortable 56,166; modest renter 51,418. Couple modest 52,690; comfortable 78,998; modest renter 69,376. Homeowner assumes outright ownership. Renter benchmark is after Commonwealth Rent Assistance, unlike the full rent input; caveat is shown. Mortgage is not directly compared to these benchmarks.
 
