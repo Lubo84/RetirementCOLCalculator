@@ -28,7 +28,7 @@ npm test
 
 ## Calculations and sources
 
-37 automated checks cover original calculations plus experience timing, reserves and buffer exclusions. Live browser QA verifies interactions and rendering separately.
+40 automated checks cover original calculations plus experience timing, reserves and buffer exclusions. Live browser QA verifies interactions and rendering separately.
 
 Category starters use rounded monthly figures observed in the original RCC on 17 October 2026; they are examples rather than exact ASFA detailed budget data. Annualised totals can differ slightly from exact benchmarks. Benchmarks: ASFA June quarter 2026, ages 65–84. Single modest 36,548; comfortable 56,166; modest renter 51,418. Couple modest 52,690; comfortable 78,998; modest renter 69,376. Homeowner assumes outright ownership. Renter benchmark is after Commonwealth Rent Assistance, unlike the full rent input; caveat is shown. Mortgage is not directly compared to these benchmarks.
 
@@ -38,3 +38,5 @@ Sources:
 - https://www.superannuation.asn.au/consumers/retirement-standard/
 
 This is not an official Hostplus tool, financial advice or an affordability model. It does not determine tax, pension eligibility, drawdown sustainability, debt repayment timing or aged care costs. A member-facing release requires content, compliance, accessibility and source-data review.
+
+Shader QA: compiled and rendered the scene through standalone Mesa/EGL at desktop and mobile dimensions. Distinct time samples produced measurable water movement. The review browser disables WebGL, so live browser QA used the matching rendered fallback; full browser GPU animation verification remains limited.

@@ -3834,7 +3834,7 @@ void main() {
  float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
  float noise(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(hash(i),hash(i+vec2(1,0)),f.x),mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);}
  float fbm(vec2 p){float a=.5,v=0.;for(int i=0;i<4;i++){v+=a*noise(p);p=p*2.02+3.1;a*=.5;}return v;}
- vec3 sunDir(){return normalize(vec3(.57+uPointer.x*.014,.13+uDrift*.045,-1.));}
+ vec3 sunDir(){return normalize(vec3(.35*(uSize.x/uSize.y)+uPointer.x*.014,.13+uDrift*.045,-1.));}
  vec3 sky(vec3 rd){float y=max(rd.y,0.);vec3 c=mix(vec3(.61,.49,.40),vec3(.035,.135,.23),smoothstep(0.,.72,y));c=mix(c,vec3(.94,.72,.45),pow(max(dot(rd,sunDir()),0.),12.)*.32);float d=length(rd-sunDir());float sun=1.-smoothstep(.029,.033,d);c+=vec3(1.,.78,.39)*sun*1.3; c+=vec3(.92,.48,.14)*pow(max(dot(rd,sunDir()),0.),240.)*.26;float cloud=fbm(rd.xz*5.+rd.y*20.+vec2(uTime*.004,0.));c+=vec3(.11,.12,.13)*smoothstep(.55,.78,cloud)*smoothstep(.06,.14,rd.y)*(1.-smoothstep(.22,.6,rd.y));return c;}
  float wave(vec2 p){float ti=uTime*.32;return sin(p.x*.54+p.y*.34-ti)*.12+sin(p.y*.91-p.x*.15+ti*.8)*.055+sin(p.x*1.9+p.y*1.55-ti*1.7)*.018+sin(p.y*4.+p.x*2.4-ti*1.1)*.007;}
  void main(){vec2 uv=vUv;vec2 p=uv*2.-1.;p.x*=uSize.x/uSize.y;vec3 ro=vec3(uPointer.x*.12,2.7,8.);vec3 rd=normalize(vec3(p.x,p.y+.105+uPointer.y*.007,-1.48));vec3 col=sky(rd);

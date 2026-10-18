@@ -31,4 +31,6 @@ s.goalTiming='later';equal(calculate(s).total,59160);equal(calculate(s).experien
 s.buffer=10;equal(calculate(s).buffer,5197.2);equal(calculate(s).total,64357.2);
 s.goalAmount=0;equal(calculate(s).total,61357.2);
 const source=fs.readFileSync(__dirname+'/source/horizon.js','utf8');assert.ok(source.includes('WebGLRenderer'));assert.ok(source.includes('prefers-reduced-motion'));assert.ok(source.includes('webglcontextlost'));assert.ok(source.includes('IntersectionObserver'));checks+=4;
+vm.runInContext(js.slice(js.indexOf('function safeCSV('),js.indexOf('function lifeList('))+';globalThis.csvSafe=safeCSV;',context);
+assert.equal(context.csvSafe('=1+1'),"'=1+1");assert.equal(context.csvSafe('@test'),"'@test");assert.equal(context.csvSafe('A family trip'),'A family trip');checks+=3;
 console.log(`${checks} checks passed: source syntax, zero budget, rent, mortgage/owner exclusion, purchase reserves, buffer exclusions, frequency conversions, presets, benchmarks, saved-data validation, IDs and accessibility hooks.`);
